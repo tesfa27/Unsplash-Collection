@@ -12,14 +12,14 @@ const Header = () => {
           </div> 
         
        {/* Navigation */}
-          <nav className="flex items-center gap-6">
+          <nav className="flex items-center">
             <NavLink
               to="/"
               end
               className={({ isActive }) =>
-                `text-sm font-medium transition-colors ${
+                `text-sm font-medium transition-colors px-5 py-2 ${
                   isActive
-                    ? "text-black bg-gray-100 px-5 py-2 rounded-sm"
+                    ? "text-black bg-gray-100 rounded-sm"
                     : "text-gray-700 hover:text-black"
                 }`
               }
@@ -30,9 +30,9 @@ const Header = () => {
             <NavLink
               to="/collections"
               className={({ isActive }) =>
-                `text-sm font-medium transition-colors ${
+                `text-sm font-medium transition-colors px-5 py-2 ${
                   isActive
-                    ? "text-black bg-gray-100 px-5 py-2 rounded-sm"
+                    ? "text-black bg-gray-100 rounded-sm"
                     : "text-gray-700 hover:text-black"
                 }`
               }
