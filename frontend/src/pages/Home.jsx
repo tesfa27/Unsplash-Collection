@@ -2,7 +2,7 @@ import React from 'react'
 
 const Home = () => {
   return (
-    <section className="flex min-h-[calc(100vh-8rem)] mt-16 items-center justify-center bg-[url('/hero-image.png')]  bg-top md:bg-center bg-cover"> 
+    <section className="flex min-h-[calc(100vh-9rem)] mt-16 items-center justify-center bg-[url('/hero-image.png')]  bg-top md:bg-center bg-cover"> 
       {/* Container */}
     <div className="w-full max-w-xl px-4">
       {/* Stack */}

@@ -1,13 +1,19 @@
+import { BrowserRouter as Router, Routes, Route } from "react-router";
 import Header from "./components/Header"
 import Home from "./pages/Home"
 
 function App() {
 
   return (
-    <main>
-     <Header/>
-     <Home />
-    </main>
+    <Router>
+      {/* Shared Header */}
+      <Header />
+
+      {/* Route content */}
+      <Routes>
+        <Route path="/" element={<Home />} />
+      </Routes>
+    </Router>
   )
 }
 

@@ -1,4 +1,4 @@
-import React from 'react'
+import { NavLink } from "react-router";
 
 const Header = () => {
   return (
@@ -13,12 +13,32 @@ const Header = () => {
         
        {/* Navigation */}
           <nav className="flex items-center gap-6">
-            <a href="#" className="text-sm font-medium text-gray-700 hover:text-black">
+            <NavLink
+              to="/"
+              end
+              className={({ isActive }) =>
+                `text-sm font-medium transition-colors ${
+                  isActive
+                    ? "text-black bg-gray-100 px-5 py-2 rounded-sm"
+                    : "text-gray-700 hover:text-black"
+                }`
+              }
+            >
               Home
-            </a>
-            <a href="#" className="text-sm font-medium text-gray-700 hover:text-black">
+            </NavLink>
+
+            <NavLink
+              to="/collections"
+              className={({ isActive }) =>
+                `text-sm font-medium transition-colors ${
+                  isActive
+                    ? "text-black bg-gray-100 px-5 py-2 rounded-sm"
+                    : "text-gray-700 hover:text-black"
+                }`
+              }
+            >
               Collections
-            </a>
+            </NavLink>
           </nav>
     </div>
     </div>
