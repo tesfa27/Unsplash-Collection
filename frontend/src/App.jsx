@@ -3,6 +3,7 @@ import Header from "./components/Header"
 import Home from "./pages/Home"
 import Collections from "./pages/Collections";
 import SearchResults from "./pages/SearchResults";
+import ImageDetail from "./pages/ImageDetail";
 
 function App() {
 
@@ -16,7 +17,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/collections" element={<Collections />} />
         <Route path="/search" element={<SearchResults />} />
-        <Route path="/image/:id" element={<div>Image Page - Coming Soon</div>} />
+        <Route path="/image/:id" element={<ImageDetail />} />
       </Routes>
     </Router>
   )

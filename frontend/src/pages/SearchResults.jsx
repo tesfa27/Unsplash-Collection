@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router'
 import ImageGrid from '../components/ImageGrid'
-import { useImageSearch } from '../hooks/useImageSearch'
+import { useImageSearch } from '../hooks/useUnsplash'
 import SearchBar from '../components/SearchBar'
 
 const SearchResults = () => {

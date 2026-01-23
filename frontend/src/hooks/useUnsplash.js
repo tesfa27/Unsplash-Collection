@@ -27,3 +27,30 @@ export const useImageSearch = () => {
 
   return { images, loading, error, searchImages }
 }
+
+export const useImageDetails = () => {
+  const [image, setImage] = useState(null)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
+  
+  const { getPhoto } = unsplashApi
+
+  const fetchImage = useCallback(async (id) => {
+    if (!id) return
+
+    setLoading(true)
+    setError(null)
+    
+    try {
+      const data = await getPhoto(id)
+      setImage(data)
+    } catch (err) {
+      setError(err.message)
+      setImage(null)
+    } finally {
+      setLoading(false)
+    }
+  }, [getPhoto])
+
+  return { image, loading, error, fetchImage }
+}
