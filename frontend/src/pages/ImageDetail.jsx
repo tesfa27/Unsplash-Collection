@@ -1,10 +1,28 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 import { useImageDetails } from '../hooks/useUnsplash'
+import AddToCollectionModal from '../components/AddToCollectionModal'
+import { useCollectionsStore } from '../stores/collectionsStore'
 
 const ImageDetail = () => {
   const { id } = useParams()
   const { image, loading, error, fetchImage } = useImageDetails()
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const { collections, removeImageFromCollection } = useCollectionsStore()
+
+  // Get collections that contain this image
+  const imageCollections = collections.filter(collection => 
+    collection.images?.some(img => img.imageId === image?.id)
+  )
+
+  const handleRemoveFromCollection = async (collectionId) => {
+    if (!image) return
+    try {
+      await removeImageFromCollection(collectionId, image.id)
+    } catch (error) {
+      console.error("Failed to remove image from collection:", error)
+    }
+  }
 
   useEffect(() => {
     if (id) {
@@ -44,7 +62,10 @@ const ImageDetail = () => {
               })}
             </p>
             <div className="flex gap-4">
-              <button className="flex items-center gap-2 bg-gray-100 px-6 py-3 rounded-lg hover:bg-gray-200 transition-colors">
+              <button 
+                onClick={() => setIsModalOpen(true)}
+                className="flex items-center gap-2 bg-gray-100 px-6 py-3 rounded-lg hover:bg-gray-200 transition-colors"
+              >
                 <img src="/Plus.svg" alt="Add" className="w-4 h-4" />
                 <span className="text-sm font-medium">Add to collection</span>
               </button>
@@ -53,9 +74,35 @@ const ImageDetail = () => {
                 <span className="text-sm font-medium">Download</span>
               </button>
             </div>
+            
+            {/* Show collections this image belongs to */}
+            {imageCollections.length > 0 && (
+              <div>
+                <h3 className="font-medium mb-2">In Collections:</h3>
+                <div className="space-y-2">
+                  {imageCollections.map((collection) => (
+                    <div key={collection._id} className="flex items-center justify-between p-2 bg-gray-50 rounded-md">
+                      <span className="text-sm">{collection.name}</span>
+                      <button
+                        onClick={() => handleRemoveFromCollection(collection._id)}
+                        className="text-red-500 hover:text-red-700 text-sm"
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
+      
+      <AddToCollectionModal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+        image={image}
+      />
     </section>
   )
 }
