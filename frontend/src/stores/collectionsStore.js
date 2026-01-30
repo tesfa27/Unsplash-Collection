@@ -6,12 +6,16 @@ export const useCollectionsStore = create((set, get) => ({
   currentCollection: null,
   loading: false,
   error: null,
+  hasLoaded: false,
 
   fetchCollections: async () => {
+    const { hasLoaded, loading } = get()
+    if (hasLoaded || loading) return
+    
     set({ loading: true, error: null })
     try {
       const collections = await collectionsApi.getCollections()
-      set({ collections, loading: false })
+      set({ collections, loading: false, hasLoaded: true })
     } catch (error) {
       set({ error: error.message, loading: false })
     }
@@ -27,10 +31,10 @@ export const useCollectionsStore = create((set, get) => ({
     }
   },
 
-  createCollection: async (name, description) => {
+  createCollection: async (name) => {
     set({ loading: true, error: null })
     try {
-      const newCollection = await collectionsApi.createCollection(name, description)
+      const newCollection = await collectionsApi.createCollection(name)
       set(state => ({ 
         collections: [...state.collections, newCollection], 
         loading: false 

@@ -26,8 +26,8 @@ export const getCollection = async (req, res) => {
 // Create new collection
 export const createCollection = async (req, res) => {
   try {
-    const { name, description } = req.body;
-    const collection = new Collection({ name, description });
+    const { name } = req.body;
+    const collection = new Collection({ name });
     await collection.save();
     res.status(201).json(collection);
   } catch (error) {

@@ -7,7 +7,6 @@ import {
   removeImageFromCollection,
   getCollectionImages
 } from "../controllers/collectionController.js";
-import { validateCollection, validateImage } from "../middleware/validation.js";
 
 const router = express.Router();
 
@@ -15,13 +14,13 @@ const router = express.Router();
 router.get("/", getCollections);
 
 // POST /api/collections - Create new collection
-router.post("/", validateCollection, createCollection);
+router.post("/", createCollection);
 
 // GET /api/collections/:id - Retrieve specific collection
 router.get("/:id", getCollection);
 
 // POST /api/collections/:id/images - Add image to collection
-router.post("/:id/images", validateImage, addImageToCollection);
+router.post("/:id/images", addImageToCollection);
 
 // DELETE /api/collections/:id/images/:imageId - Remove image from collection
 router.delete("/:id/images/:imageId", removeImageFromCollection);

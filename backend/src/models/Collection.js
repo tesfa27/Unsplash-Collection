@@ -6,10 +6,6 @@ const collectionSchema = new mongoose.Schema({
     required: true,
     trim: true
   },
-  description: {
-    type: String,
-    trim: true
-  },
   images: [{
     imageId: {
       type: String,
@@ -34,11 +30,6 @@ const collectionSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   }
-});
-
-collectionSchema.pre('save', function(next) {
-  this.updatedAt = Date.now();
-  next();
 });
 
 export default mongoose.model("Collection", collectionSchema);

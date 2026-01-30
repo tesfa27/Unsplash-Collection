@@ -7,10 +7,10 @@ export const collectionsApi = {
   getCollection: (id) => 
     backendApiClient(`/api/collections/${id}`),
   
-  createCollection: (name, description) => 
+  createCollection: (name) => 
     backendApiClient('/api/collections', {
       method: 'POST',
-      body: JSON.stringify({ name, description })
+      body: JSON.stringify({ name })
     }),
   
   addImageToCollection: (collectionId, imageData) => 
