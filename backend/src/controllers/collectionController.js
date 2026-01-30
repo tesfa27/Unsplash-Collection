@@ -3,7 +3,7 @@ import Collection from "../models/Collection.js";
 // Get all collections
 export const getCollections = async (req, res) => {
   try {
-    const collections = await Collection.find().select('-images');
+    const collections = await Collection.find();
     res.json(collections);
   } catch (error) {
     res.status(500).json({ error: error.message });

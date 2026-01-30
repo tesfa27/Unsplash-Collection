@@ -22,6 +22,9 @@ export const useCollectionsStore = create((set, get) => ({
   },
 
   fetchCollection: async (id) => {
+    const { loading } = get()
+    if (loading) return
+    
     set({ loading: true, error: null })
     try {
       const collection = await collectionsApi.getCollection(id)

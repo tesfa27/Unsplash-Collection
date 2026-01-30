@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { useNavigate } from "react-router"
 import CollectionCard from "./CollectionCard"
 import AddCollectionModal from "./AddCollectionModal"
 import { useCollectionsStore } from "../stores/collectionsStore"
@@ -6,6 +7,11 @@ import { useCollectionsStore } from "../stores/collectionsStore"
 const CollectionsGrid = () => {
   const { collections, loading, error, fetchCollections } = useCollectionsStore()
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const navigate = useNavigate()
+
+  const handleCollectionClick = (collectionId) => {
+    navigate(`/collections/${collectionId}`)
+  }
 
   useEffect(() => {
     fetchCollections()
@@ -36,6 +42,7 @@ const CollectionsGrid = () => {
             title={collection.name}
             photos={collection.images?.slice(0, 3).map(img => img.url) || []}
             totalPhotos={collection.images?.length || 0}
+            onClick={() => handleCollectionClick(collection._id)}
           />
         ))}
       </div>

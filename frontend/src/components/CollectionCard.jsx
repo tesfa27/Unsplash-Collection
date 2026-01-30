@@ -2,12 +2,16 @@ const CollectionCard = ({
   title,
   photos = [],
   totalPhotos,
+  onClick
 }) => {
   const count = photos.length
   const displayCount = totalPhotos ?? count
 
   return (
-    <div className="overflow-hidden rounded-lg bg-gray-100">
+    <div 
+      onClick={onClick}
+      className="overflow-hidden rounded-lg bg-gray-100 cursor-pointer hover:shadow-lg transition-shadow"
+    >
       <div className="h-56 w-full">
         {count === 1 && (
           <img
