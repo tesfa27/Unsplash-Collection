@@ -23,6 +23,16 @@ const CollectionsGrid = () => {
   return (
     <section className="mx-auto max-w-7xl px-4 py-10">
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {collections.map((collection) => (
+          <CollectionCard
+            key={collection._id}
+            title={collection.name}
+            photos={collection.images?.slice(0, 3).map(img => img.url) || []}
+            totalPhotos={collection.images?.length || 0}
+            onClick={() => handleCollectionClick(collection._id)}
+          />
+        ))}
+        
         {/* Add New Collection Card */}
         <div 
           onClick={() => setIsModalOpen(true)}
@@ -35,16 +45,6 @@ const CollectionsGrid = () => {
             </div>
           </div>
         </div>
-        
-        {collections.map((collection) => (
-          <CollectionCard
-            key={collection._id}
-            title={collection.name}
-            photos={collection.images?.slice(0, 3).map(img => img.url) || []}
-            totalPhotos={collection.images?.length || 0}
-            onClick={() => handleCollectionClick(collection._id)}
-          />
-        ))}
       </div>
       
       <AddCollectionModal 

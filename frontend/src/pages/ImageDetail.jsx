@@ -24,6 +24,25 @@ const ImageDetail = () => {
     }
   }
 
+  const handleDownload = async () => {
+    if (!image) return
+    
+    try {
+      const response = await fetch(image.urls.full)
+      const blob = await response.blob()
+      const url = window.URL.createObjectURL(blob)
+      const link = document.createElement('a')
+      link.href = url
+      link.download = `unsplash-${image.id}.jpg`
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+      window.URL.revokeObjectURL(url)
+    } catch (error) {
+      console.error('Download failed:', error)
+    }
+  }
+
   useEffect(() => {
     if (id) {
       fetchImage(id)
@@ -69,7 +88,10 @@ const ImageDetail = () => {
                 <img src="/Plus.svg" alt="Add" className="w-4 h-4" />
                 <span className="text-sm font-medium">Add to collection</span>
               </button>
-              <button className="flex items-center gap-2 bg-gray-100 px-6 py-3 rounded-lg hover:bg-gray-200 transition-colors">
+              <button 
+                onClick={handleDownload}
+                className="flex items-center gap-2 bg-gray-100 px-6 py-3 rounded-lg hover:bg-gray-200 transition-colors"
+              >
                 <img src="/down arrow.svg" alt="Download" className="w-4 h-4" />
                 <span className="text-sm font-medium">Download</span>
               </button>
@@ -81,8 +103,56 @@ const ImageDetail = () => {
                 <h3 className="font-medium mb-2">In Collections:</h3>
                 <div className="space-y-2">
                   {imageCollections.map((collection) => (
-                    <div key={collection._id} className="flex items-center justify-between p-2 bg-gray-50 rounded-md">
-                      <span className="text-sm">{collection.name}</span>
+                    <div key={collection._id} className="flex items-center gap-3 p-2 bg-gray-50 rounded-md">
+                      {/* Collection Card */}
+                      <div className="overflow-hidden rounded bg-gray-100 w-16 h-12 flex-shrink-0">
+                        {collection.images?.length === 1 && (
+                          <img
+                            src={collection.images[0].url}
+                            alt={collection.name}
+                            className="h-full w-full object-cover"
+                          />
+                        )}
+                        {collection.images?.length === 2 && (
+                          <div className="flex h-full">
+                            {collection.images.slice(0, 2).map((img, i) => (
+                              <img
+                                key={i}
+                                src={img.url}
+                                alt={collection.name}
+                                className="h-full w-1/2 object-cover"
+                              />
+                            ))}
+                          </div>
+                        )}
+                        {collection.images?.length >= 3 && (
+                          <div className="flex h-full">
+                            <img
+                              src={collection.images[0].url}
+                              alt={collection.name}
+                              className="h-full w-3/4 object-cover"
+                            />
+                            <div className="flex h-full w-1/4 flex-col">
+                              <img
+                                src={collection.images[1].url}
+                                alt={collection.name}
+                                className="h-1/2 w-full object-cover"
+                              />
+                              <img
+                                src={collection.images[2].url}
+                                alt={collection.name}
+                                className="h-1/2 w-full object-cover"
+                              />
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                      
+                      <div className="flex-1">
+                        <span className="text-sm font-medium">{collection.name}</span>
+                        <p className="text-xs text-gray-500">{collection.images?.length || 0} photos</p>
+                      </div>
+                      
                       <button
                         onClick={() => handleRemoveFromCollection(collection._id)}
                         className="text-red-500 hover:text-red-700 text-sm"

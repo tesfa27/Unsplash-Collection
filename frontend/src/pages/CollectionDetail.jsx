@@ -40,7 +40,11 @@ const CollectionDetail = () => {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {currentCollection.images?.map((image) => (
-              <div key={image.imageId} className="group">
+              <div 
+                key={image.imageId} 
+                className="group cursor-pointer"
+                onClick={() => navigate(`/image/${image.imageId}`)}
+              >
                 <img
                   src={image.url}
                   alt={image.altDescription || 'Collection image'}
