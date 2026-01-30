@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
+import collectionRoutes from './routes/collections.js';
 
 const app = express();
 
@@ -8,6 +9,9 @@ const app = express();
 app.use(morgan('dev'));
 app.use(cors());
 app.use(express.json()); 
+
+// Routes
+app.use('/api/collections', collectionRoutes);
 
 // Root Route
 app.get('/', (req, res) => {
