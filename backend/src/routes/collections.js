@@ -7,8 +7,12 @@ import {
   removeImageFromCollection,
   getCollectionImages
 } from "../controllers/collectionController.js";
+import { ensureDbConnection } from "../middleware/dbMiddleware.js";
 
 const router = express.Router();
+
+// Apply database connection middleware to all routes
+router.use(ensureDbConnection);
 
 // GET /api/collections - Retrieve all collections
 router.get("/", getCollections);
